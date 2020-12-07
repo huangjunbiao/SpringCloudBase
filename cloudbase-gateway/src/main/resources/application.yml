@@ -1,0 +1,9 @@
+server:
+  port: 9080
+
+logging:
+  level:
+    root: INFO
+    com.huang: DEBUG
+    org.springframework: INFO
+    org.springframework.cloud.gateway: DEBUG

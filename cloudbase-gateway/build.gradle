@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'com.huang'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Spring Cloud
+    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+    // Alibaba Cloud
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+}

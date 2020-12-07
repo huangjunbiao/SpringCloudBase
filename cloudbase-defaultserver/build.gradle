@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'com.huang'
+version '1.0-SNAPSHOT'
+
+bootJar{
+    layered()
+    launchScript()//可执行jar
+//    mainClassName 'com.cdv.nsite.cloud.authserver.AuthServerApplication'
+}
+dependencies {
+    // Spring Boot
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    // Alibaba Cloud
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+}
