@@ -1,8 +1,4 @@
 spring:
-  application:
-    name: cloudbase-defaultserver
-  main:
-    allow-bean-definition-overriding: true
   cloud:
     nacos:
       config:
