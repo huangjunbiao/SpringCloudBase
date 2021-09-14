@@ -8,7 +8,7 @@ version '1.0-SNAPSHOT'
 bootJar{
     layered()
     launchScript()//可执行jar
-//    mainClassName 'com.cdv.nsite.cloud.authserver.AuthServerApplication'
+    mainClassName 'com.huang.cloudbase.defaultserver.DefaultServerApplication'
 }
 dependencies {
     // Spring Boot

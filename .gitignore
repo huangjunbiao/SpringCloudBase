@@ -40,3 +40,9 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+**/config/*.yml
+**/config/*.xml
+lastcommit.txt
+
+/.idea/
