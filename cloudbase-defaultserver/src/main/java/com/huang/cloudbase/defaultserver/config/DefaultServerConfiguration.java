@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * @date 2020/12/8 15:36
  */
 @Configuration
-@ComponentScan({"com.huang.cloudbase.defaultserver.test.controller"})
+@ComponentScan({"com.huang.cloudbase.defaultserver.test"})
 public class DefaultServerConfiguration {
 
 }

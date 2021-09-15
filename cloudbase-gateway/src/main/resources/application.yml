@@ -19,4 +19,4 @@ logging:
     root: INFO
     com.huang: DEBUG
     org.springframework: INFO
-    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.gateway: INFO

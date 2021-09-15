@@ -25,9 +25,17 @@ bootJar {
 // 作用于所有模块
 allprojects {
 
-    repositories {
+    /*repositories {
         mavenLocal();
         mavenCentral();
+    }*/
+
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url="http://maven.aliyun.com/nexus/content/repositories/central/"
+        }
     }
 
     group = 'com.huang'
@@ -58,7 +66,7 @@ subprojects {
          * implementation： 依赖不会传递
          * compile：依赖会传递
          */
-        implementation 'org.springframework.cloud:spring-cloud-starter'
+//        implementation 'org.springframework.cloud:spring-cloud-starter'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
         compile "org.springframework.cloud:spring-cloud-starter-zipkin"
     }

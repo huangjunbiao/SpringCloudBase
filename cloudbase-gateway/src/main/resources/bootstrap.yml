@@ -15,11 +15,25 @@ spring:
         enabled: true
         register-enabled: true
 
-#开启端点
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  security:
-    enabled: false
+#spring:
+#  application:
+#    name: cloudbase-gateway
+#  main:
+#    allow-bean-definition-overriding: true
+#  cloud:
+#    nacos:
+#      config:
+#        server-addr: 10.7.6.14:8848
+#        namespace: saw
+#        group: huang.cloudbase
+#        file-extension: yml
+#        shared-configs:
+#          - dataId: common.yml
+#            group: huang.cloudbase
+#            refresh: true
+#      discovery:
+#        server-addr: 10.7.6.14:8848
+#        namespace: saw
+#        group: huang.cloudbase
+#        enabled: true
+#        register-enabled: true

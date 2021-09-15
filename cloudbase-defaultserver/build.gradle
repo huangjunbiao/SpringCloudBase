@@ -6,14 +6,25 @@ group 'com.huang'
 version '1.0-SNAPSHOT'
 
 bootJar{
-    layered()
     launchScript()//可执行jar
     mainClassName 'com.huang.cloudbase.defaultserver.DefaultServerApplication'
 }
+
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
 dependencies {
     // Spring Boot
     implementation "org.springframework.boot:spring-boot-starter-web"
-    // Alibaba Cloud
+    // Spring cloud
+//    implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
     implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+
+    implementation 'org.slf4j:jcl-over-slf4j'
+    implementation 'org.slf4j:log4j-over-slf4j'
+    implementation 'org.slf4j:jul-to-slf4j'
+    implementation 'org.apache.logging.log4j:log4j-api'
+    implementation 'org.apache.logging.log4j:log4j-to-slf4j'
 }

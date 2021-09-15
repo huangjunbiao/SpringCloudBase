@@ -1,14 +1,48 @@
-server:
-  port: 9001
+# 与服务监控管理相关的配置
+endpoints.jmx.enabled: false
+management:
+  server.port: 8081
+  endpoint.health:
+    show-details: always
+    group:
+      liveness.include: livenessState,nacosConfig,nacosDiscovery,dubbo,redis
+      readiness.include: readinessState,nacosConfig,nacosDiscovery,dubbo,redis
+  endpoints:
+    web.exposure.include: health,info,loggers,metrics,mappings,scheduledtasks,auditevents,beans,caches
+  health:
+    probes.enabled: true
+    # Dubbo状态：registry,memory,threadpool,load,spring,datasource,server
+    dubbo.status.defaults: registry,memory,threadpool,load
 
 spring:
-  application:
-    name: cloudbase-defaultserver
   main:
     allow-bean-definition-overriding: true
   zipkin:
     base-url: http://localhost:9411
-#    enabled: true
-#    locator:
-#      discovery:
-#        enabled: true
+    enabled: false
+    locator:
+      discovery:
+        enabled: true
+
+dubbo:
+  protocol:
+    name: dubbo
+    port: 20880
+    serialization: kryo
+  metadata-report:
+    address: nacos://${spring.cloud.nacos.config.server-addr}
+  provider:
+    payload: 16777216
+    filter: -exception,nsiteException
+    threadpool: cached   # fixed
+    corethreads: 100
+    threads: 1000
+    alive: 60000
+    retries: 0
+    timeout: 5000
+  consumer:
+    check: false
+    retries: 0
+    timeout: 5000
+  cloud:
+    subscribed-services: ming-appserver
