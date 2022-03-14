@@ -1,0 +1,33 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
+
+
+group 'com.huang'
+version '1.0-SNAPSHOT'
+
+bootJar{
+    launchScript()//可执行jar
+}
+
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
+dependencies {
+    compileOnly "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    // https://mvnrepository.com/artifact/org.dom4j/dom4j
+    implementation group: 'org.dom4j', name: 'dom4j', version: '2.1.1'
+    // https://mvnrepository.com/artifact/jaxen/jaxen
+    implementation group: 'jaxen', name: 'jaxen', version: '1.2.0'
+    // https://mvnrepository.com/artifact/org.jsoup/jsoup
+    implementation group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
+    // https://mvnrepository.com/artifact/cn.hutool/hutool-core
+    implementation group: 'cn.hutool', name: 'hutool-core', version: '5.7.10'
+    // https://mvnrepository.com/artifact/cn.hutool/hutool-cache
+    compile group: 'cn.hutool', name: 'hutool-cache', version: '5.7.12'
+}

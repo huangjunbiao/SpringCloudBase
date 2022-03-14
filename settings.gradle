@@ -1,4 +1,5 @@
 rootProject.name = 'com-huang-cloudbase'
 include 'cloudbase-defaultserver'
 include 'cloudbase-gateway'
+include 'cloudbase-common-learn'
 

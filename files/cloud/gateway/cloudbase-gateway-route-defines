@@ -1,0 +1,16 @@
+[
+	{
+		"id": "defaultservertest",
+		"uri": "lb://cloudbase-server",
+		"order": -1,
+		"predicates": [
+			{
+				"args": {
+					"pattern": "/z/**"
+				},
+			    "name": "Path"
+			}
+		],
+		"filters": []
+    }
+]
