@@ -1,0 +1,35 @@
+# redisson的配置请参考：https://github.com/redisson/redisson/wiki/2.-Configuration
+    # 下面的内容仅仅是几个最简单的例子，如果需要调优，建议参考官方文档。
+
+    # 这是单个服务器的配置最简样例。更复杂的参数，请参考：https://github.com/redisson/redisson/wiki/2.-Configuration#262-single-instance-json-yaml-and-spring-xml-config-format
+    #singleServerConfig:
+    #  address: redis://127.0.0.1:6379
+
+    # 这是集群配置样例。  更复杂的参数，请参考：https://github.com/redisson/redisson/wiki/2.-Configuration#242-cluster-json-yaml-and-spring-xml-config-format
+    clusterServersConfig:
+    password: 0p-0p-0p-
+    nodeAddresses:
+    - redis://redis-redis-cluster-headless:6379
+    #     - redis://127.0.0.1:6379
+    #     - redis://127.0.0.1:6380
+
+    # 这是主从结构的配置样例。更复杂的参数，请参考：https://github.com/redisson/redisson/wiki/2.-Configuration#282-master-slave-json-yaml-and-spring-xml-config-format
+    #masterSlaveServersConfig:
+    #  masterAddress: redis://127.0.0.1:6379
+    #  slaveAddresses:
+    #    - redis://127.0.0.1:6380
+    #    - redis://127.0.0.1:6381
+
+    # 这是哨兵结构的配置样例。更复杂的参数，请参考：https://github.com/redisson/redisson/wiki/2.-Configuration#272-sentinel-json-yaml-and-spring-xml-config-format
+    #sentinelServersConfig:
+    #  masterName: "mymaster"
+    #  scanInterval: 1000
+    #  timeout: 5000
+    #  password: "pwd123"
+    #  readMode: "MASTER"
+    #  subscriptionMode: "MASTER"
+    #  masterConnectionMinimumIdleSize: 16 # 如果经常发生RedissonTimeout的异常，可以考虑将此属性设置为0
+    #  masterConnectionPoolSize: 128
+    #  sentinelAddresses:
+    #    - redis://10.7.6.46:26379
+    #    - redis://10.7.6.99:26379
