@@ -19,6 +19,8 @@ dependencies {
     compileOnly "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-data-redis"
 
+    // https://mvnrepository.com/artifact/org.apache.directory.studio/org.apache.commons.io
+    implementation 'org.apache.directory.studio:org.apache.commons.io:2.4'
     implementation "com.fasterxml.jackson.core:jackson-databind"
     // https://mvnrepository.com/artifact/org.dom4j/dom4j
     implementation group: 'org.dom4j', name: 'dom4j', version: '2.1.1'

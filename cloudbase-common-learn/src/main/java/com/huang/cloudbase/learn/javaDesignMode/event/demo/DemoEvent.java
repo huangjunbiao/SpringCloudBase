@@ -1,4 +1,4 @@
-package com.huang.cloudbase.learn.javaDesignMode.event;
+package com.huang.cloudbase.learn.javaDesignMode.event.demo;
 
 import java.util.EventObject;
 
