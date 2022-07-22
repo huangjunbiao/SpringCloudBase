@@ -184,7 +184,7 @@ public class XmlHandler {
         itemMap.put("link", "https://www.baidu.com/");
         itemMap.put("description", "123456789");
         itemMap.put("source", "qaz");
-        appendDocumentItem("./files/xml/rss.xml", itemMap);
+        appendDocumentItem("./files/document/xml/rss.xml", itemMap);
 //        System.out.println(createXml("./files/xml/rss.xml", null));
     }
 }

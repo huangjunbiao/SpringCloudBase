@@ -1,0 +1,9 @@
+分片配置：
+假设1个节点为mongos路由（27031），三个分片，分片1（27023）、分片2（27024、27025、27026）、分片3（27027），
+1个配置服务器集群（27028、27029、27030）.
+1.配置分片服务器：给3个分片的mongo实例的配置文件增加配置--sharding:clusterRole:shardsvr；
+同时给分片2配置存储数据的分片复制集，选取分片2中三个实例其中一个作为主节点。
+2。config配置服务器的配置：给（27028、27029、27030）增加配置--sharding:clusterRole:configsvr，同时给它们配置复制集；
+3.mongos路由的配置--sharding:configDB:configRS/192.168.0.128:27028;(可配置多个节点地址，configRS与之前配置的config节点复制集_id一致)；
+4.配置sharding，首先连接mongos--mongo --port 27031，然后增加分区（use admin,sh.addShard("192.168.0.128.23")//添加可复制集：sh.addShard("dataRS/地址")，dataRS为存储数据复制集的_id），
+通过sh.status()查看分片结果，对数据库启用分片：sh.enableSharding("数据库名")，对集合进行分片：sh.shardCollection("数据库名.集合名",{"分片键名":"hashed"})。

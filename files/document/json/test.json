@@ -1,0 +1,12 @@
+{
+  "videos": [
+    {
+      "title": "标题",
+      "link": "视频链接",
+      "description": "介绍",
+      "duration": 128.00,
+      "video_cover_url": "www.baidu.com",
+      "pubDate": "2022-04-24 18:00:00"
+    }
+  ]
+}
