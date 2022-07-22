@@ -1,4 +1,4 @@
-package com.huang.cloudbase.learn.javaDesignMode.event.demo;
+package com.huang.cloudbase.learn.javadesignmode.event.demo;
 
 import java.util.Enumeration;
 import java.util.Vector;

@@ -1,4 +1,4 @@
-package com.huang.cloudbase.learn.javaDesignMode.event;
+package com.huang.cloudbase.learn.javadesignmode.event;
 
 import java.util.ArrayList;
 import java.util.List;
