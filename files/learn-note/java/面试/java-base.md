@@ -136,16 +136,6 @@ nacos作为配置中心的功能是基于raft算法来实现的。涉及三种�
 * 索引字段上使用（!= 或者<>,not in），可能会导致失效；
 * 索引字段上使用is null，is not null；
 * 左连接查询或者右连接查询查询关联的字段编码格式不一致；
-#### MySQL存储引擎InnoDB与MyISAM
-* InnoDB支持外键，MyISAM不支持；
-* InnoDB支持MVCC（多版本并发控制），MyISAM不支持；
-* select count(*)MyISAM更快，因为它有一个变量保存了整个表的总行数，可以直接读取，InnoDB需要全表扫描；
-* InnoDB不支持全文索引，MyISAM支持（InnoDB5.7之后支持）；
-* InnoDB支持biao表、行级锁，MyISAM支持表级锁；
-* InnoDB表必须有主键，MyISAM可以没有主键；
-* InnoDB表需要更多的内存和存储，而MyISAM可被压缩，存储空间较小；
-* InnoDB按主键大小有序插入，MyISAM按记录插入顺序保存；
-* InnoDB存储引擎提供了具有提交、回滚、崩溃恢复能力的事务安全，与MyISAM比InnoDB写效率差一些，并且会占用更多的磁盘空间以保留数据和索引。
 #### HashMap
 JDK1.7底层数据结构是数组+链表，JDK1.8底层数据结构是数组+链表+红黑树。  
 数据元素通过映射关系，即散列函数，映射到桶数组对应的索引位置，插入该位置时，如果发生冲突，从冲突的位置拉一个链表，把冲突元素放到链表。如果链表的长度>8且数组大小>=64，链表转为红黑树，如果红黑树节点个数<6，转为链表。
@@ -382,3 +372,14 @@ OSI七层协议、TCP/IP四层协议、五层协议
 #### URI和URL
 * URI是统一资源标志符，可以唯一标识一个资源；
 * URL是统一资源定位符，可以提供该资源的路径。它是一种具体的URI。
+
+### Spring
+#### Spring MVC工作原理
+1. 客户端（浏览器）发送请求，直接请求到DispatcherServlet（前端控制器）；
+2. DispatcherServlet根据请求信息调用HandlerMapping（处理器映射器），解析请求对应的Handler；
+3. 解析到对应的Handler（即controller）后开始由HandlerAdapter适配器处理；
+4. HandlerAdapter会根据handler来调用真正的处理器处理请求，并处理相应的业务逻辑；
+5. 处理器处理完业务后，会返回一个ModelAndView对象，Model是返回的数据对象，View是逻辑上的view；
+6. ViewResolver视图解析器会根据逻辑view找到实际view；
+7. DispatcherServlet把返回的model传给View进行视图渲染；
+8. 最后把view返回给客户端。
