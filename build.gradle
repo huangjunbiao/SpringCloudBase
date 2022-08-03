@@ -68,7 +68,9 @@ subprojects {
          */
 //        implementation 'org.springframework.cloud:spring-cloud-starter'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        compile "org.springframework.cloud:spring-cloud-starter-zipkin"
+        compile "org.springframework.cloud:spring-cloud-starter-zipkin:2.2.8.RELEASE"
+        // Spring cloud
+        compile 'org.springframework.cloud:spring-cloud-starter-bootstrap'
     }
 
     dependencyManagement {

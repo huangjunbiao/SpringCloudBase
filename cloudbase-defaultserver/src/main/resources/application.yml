@@ -24,6 +24,19 @@ spring:
       discovery:
         enabled: true
 
+server:
+  port: 8080
+  forward-headers-strategy: framework
+  servlet:
+    context-path: /cloudbase
+  tomcat:
+    redirect-context-root: false
+
+cloudbase.server:
+  data: xx
+  test: xx
+  enable: false
+
 dubbo:
   protocol:
     name: dubbo
