@@ -1,5 +1,6 @@
 package com.huang.cloudbase.gateway.service;
 
+import com.alibaba.cloud.nacos.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.PropertyKeyConst;
 import com.alibaba.nacos.api.config.ConfigService;
@@ -67,10 +68,9 @@ public class DynamicRouteServiceImplByNacos {
                 @Override
                 public void receiveConfigInfo(String configInfo) {
                     try {
-                        List<RouteDefinition> definitionList = objectMapper.readValue(config, objectMapper.getTypeFactory().constructCollectionType(LinkedList.class, RouteDefinition.class));
-                        definitionList.forEach(definition -> {
-                            dynamicRouteService.update(definition);
-                        });
+                        List<RouteDefinition> definitionList = objectMapper.readValue(configInfo, objectMapper.getTypeFactory().constructCollectionType(LinkedList.class, RouteDefinition.class));
+//                        dynamicRouteService.refresh(definitionList);
+                        definitionList.forEach(definition -> dynamicRouteService.update(definition));
                     } catch (JsonProcessingException e) {
                         e.printStackTrace();
                     }
@@ -95,7 +95,7 @@ public class DynamicRouteServiceImplByNacos {
             try {
                 List<RouteDefinition> definitionList = objectMapper.readValue(config, objectMapper.getTypeFactory().constructCollectionType(LinkedList.class, RouteDefinition.class));
                 definitionList.forEach(definition -> {
-                    logger.info("update route : {}", definition.toString());
+                    logger.info("update route : {}", definition);
                     dynamicRouteService.add(definition);
                 });
             } catch (JsonProcessingException e) {
@@ -105,6 +105,9 @@ public class DynamicRouteServiceImplByNacos {
         } catch (NacosException e) {
             e.printStackTrace();
         }
+        NacosDiscoveryProperties nacosDiscoveryProperties = new NacosDiscoveryProperties();
+        String valus = nacosDiscoveryProperties.getMetadata().get("management.port");
+        logger.info("nacos Metadata:{}", valus);
         dynamicRouteByNacosListener();
     }
 

@@ -16,4 +16,6 @@ dependencies {
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
     implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+
+    implementation group: 'cn.hutool', name: 'hutool-core', version: '5.7.10'
 }

@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+}
+
+group 'com.huang'
+version '1.0-SNAPSHOT'
+
+bootJar{
+    launchScript()//可执行jar
+    mainClassName 'com.huang.cloudbase.authserver.AuthServerApplication'
+}
+
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
+springBoot {
+    buildInfo()
+}
+
+dependencies {
+    // Spring Boot
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    // Spring cloud
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery"
+    implementation "com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config"
+}

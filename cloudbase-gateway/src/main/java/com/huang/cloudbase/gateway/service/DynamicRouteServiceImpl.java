@@ -1,13 +1,17 @@
 package com.huang.cloudbase.gateway.service;
 
+import com.huang.cloudbase.gateway.router.CustomizeInMemoryRouteDefinitionRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.route.RouteDefinition;
-import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
+
+import java.util.List;
 
 /**
  * @author huangjunbiao
@@ -15,8 +19,11 @@ import reactor.core.publisher.Mono;
  */
 @Component
 public class DynamicRouteServiceImpl implements ApplicationEventPublisherAware {
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
-    private RouteDefinitionWriter routeDefinitionWriter;
+    private CustomizeInMemoryRouteDefinitionRepository routeDefinitionWriter;
 
     private ApplicationEventPublisher publisher;
 
@@ -31,6 +38,10 @@ public class DynamicRouteServiceImpl implements ApplicationEventPublisherAware {
         routeDefinitionWriter.save(Mono.just(definition)).subscribe();
         this.publisher.publishEvent(new RefreshRoutesEvent(this));
         return "success";
+    }
+
+    public void refresh(List<RouteDefinition> routeDefinitions) {
+        this.routeDefinitionWriter.refreshRouter(routeDefinitions);
     }
 
     /**
@@ -49,6 +60,8 @@ public class DynamicRouteServiceImpl implements ApplicationEventPublisherAware {
         try {
             routeDefinitionWriter.save(Mono.just(definition)).subscribe();
             this.publisher.publishEvent(new RefreshRoutesEvent(this));
+            logger.info("The route(id: {}) is updated.", definition.getId());
+
             return "success";
         } catch (Exception e) {
             return "update route  fail";
@@ -72,6 +85,7 @@ public class DynamicRouteServiceImpl implements ApplicationEventPublisherAware {
         }
     }
 
+    @SuppressWarnings("NullableProblems")
     @Override
     public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
         this.publisher = applicationEventPublisher;

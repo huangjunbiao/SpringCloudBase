@@ -1,0 +1,39 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: ${SERVICE_NAME:cloudbase}
+        namespace: a35d4bea-ab96-4a45-b38d-364d84ea153e
+        group: com.huang.cloudbase
+        name: cloudbase-gateway-test
+        file-extension: yml
+        refresh-enabled: true
+      discovery:
+        server-addr: localhost:8848
+        namespace: a35d4bea-ab96-4a45-b38d-364d84ea153e
+        group: com.huang.cloudbase
+        enabled: true
+        register-enabled: true
+
+#spring:
+#  application:
+#    name: cloudbase-server
+#  main:
+#    allow-bean-definition-overriding: true
+#  cloud:
+#    nacos:
+#      config:
+#        server-addr: 10.7.6.14:8848
+#        namespace: saw
+#        group: huang.cloudbase
+#        file-extension: yml
+#        shared-configs:
+#          - dataId: common.yml
+#            group: huang.cloudbase
+#            refresh: true
+#      discovery:
+#        server-addr: 10.7.6.14:8848
+#        namespace: saw
+#        group: huang.cloudbase
+#        enabled: true
+#        register-enabled: true

@@ -25,15 +25,12 @@ spring:
         enabled: true
 
 server:
-  port: 8080
+  port: 8081
   forward-headers-strategy: framework
   servlet:
     context-path: /cloudbase
-
-cloudbase.server:
-  data: xx
-  test: xx
-  enable: false
+  tomcat:
+    redirect-context-root: false
 
 dubbo:
   protocol:
@@ -56,4 +53,4 @@ dubbo:
     retries: 0
     timeout: 5000
   cloud:
-    subscribed-services: ming-appserver
+    subscribed-services: cloudbase-server
