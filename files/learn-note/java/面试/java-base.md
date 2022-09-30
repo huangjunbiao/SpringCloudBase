@@ -4,6 +4,25 @@ comparator位于包java.util下，comparable位于包java.lang下。
 Comparable是一个对象本身就已经支持自比较所需要实现的接口（如string integer自身可以比较大小，已经实现了Comparable接口），自定义的类要在加入list容器后能够排序，可以实现comparable接口，在用Collections.sort方法排序时，如果不指定comparator那么就以自然顺序排序，自然顺序即实现comparable接口设定的排序方式。  
 Comparator是一个专用的比较器，当这个对象不支持自比较或者自比较函数无法满足需求时，可以写一个比较器完成两个对象之间大小的比较。  
 使用comparator是策略模式，就是不改变对象自身，而用一个策略对象来改变它的行为。
+#### 动态代理
+在程序运行期间，为其他对象提供一个代理以控制对某个对象的访问，代理类负责为委托类预处理消息，过滤消息并转发消息，以及进行消息被委托类执行后的后续处理。
+##### JDK动态代理
+只针对接口做代理，依赖Proxy类和InvocationHandler接口。由Java内部的反射机制来实现的。
+* InvocationHandler接口的方法：invoke(Object obj,Method method, Object[] args)，第一个参数一般是指代理类，method是被代理的方法，args为该方法的参数数组。
+* Proxy：动态代理类，getProxyClass（获得一个代理类）、newProxyInstance（返回代理类的一个实例）
+> 当代理对象调用真实对象的方法时，其会自动的跳转到代理对象关联的handler对象的invoke方法来进行调用。JDK生成的最终代理类继承自Proxy并实现了自定义的被代理的类接口，在实现接口方法的内部，通过反射调用了InvocationHandlerImpl的invoke方法。
+###### 动态代理步骤
+1. 创建一个实现接口InvocationHandler的类，它必须实现invoke方法 （创建自己的调用处理器）；
+2. 创建被代理的类及接口；
+3. 通过Proxy的静态方法newProxyInstance(ClassLoaderloader, Class[] interfaces, InvocationHandler h)创建一个代理；
+4. 通过代理调用方法 （通过反射机制获得动态代理类的构造函数，其唯一参数类型是调用处理器接口类型、通过构造函数创建动态代理类实例，构造时调用处理器对象作为参数被传入）；
+##### cglib动态代理
+可以对任意类生成代理对象，它的原理是对目标对象进行继承代理，如果目标对象被final修饰，那么该类无法被cglib代理。  
+需要导入asm.jar
+###### 实现步骤
+1. 创建一个实现接口MethodInterceptor的代理类，重写intercept方法；
+2. 创建获取被代理类的方法getInstance(Object target)；
+3. 获取代理类，通过代理调用方法。
 #### 类实例化顺序
 父类静态代码块/静态域 > 子类静态代码块/静态域 > 父类非静态代码块 > 父类构造器 > 子类非静态代码块 > 子类构造器
 #### 创建java对象的方式
@@ -309,7 +328,7 @@ AIO实现了IO全流程的非阻塞，就是应用进程发出系统调用后，
 2. 如果trx_id >= max_limit_id，表明生成该版本的事务在生成read view后才生成，所以该版本不可以被当前事务访问；
 3. 如果min_limit_id =<trx_id< max_limit_id， 1）如果 m_ids 包含 trx_id,则代表 Read View 生成时刻，这个事务还未提交，但是如果数据的 trx_id 等于 creator_trx_id 的话，表明数据是自己生成的，因此是可见的。 2）如果 m_ids 包含 trx_id，并且 trx_id 不等于 creator_trx_id，则Read View 生成时，事务未提交，并且不是自己生产的，所以当前事务也是看不见的；  3）如果 m_ids 不包含 trx_id，则说明你这个事务在 Read View 生成之前就已经提交了，修改的结果，当前事务是能看见的。
 ##### 可重复读实现原理
-数据库是通过加锁实现隔离级别的，串行化隔离级别就是加锁实现，但是如果加速哟频繁，性能会下降。所以出现了MVCC。  
+数据库是通过加锁实现隔离级别的，串行化隔离级别就是加锁实现，但是如果加锁频繁，性能会下降。所以出现了MVCC。  
 MVCC，可重复读的实现原理就是MVCC多版本并发控制。在一个事务范围内，两个相同的查询，读取同一条记录，却返回了不同的数据，这就是不可重复读。可重复读隔离级别，就是为了解决不可重复读问题。  
 查询一条记录，MVCC的流程：
 1. 获取事务自己的版本号，即事务ID；
@@ -383,3 +402,44 @@ OSI七层协议、TCP/IP四层协议、五层协议
 6. ViewResolver视图解析器会根据逻辑view找到实际view；
 7. DispatcherServlet把返回的model传给View进行视图渲染；
 8. 最后把view返回给客户端。
+* DispatcherServlet 前端控制器：接受请求，进行分发，并根据视图解析器进行响应渲染；
+* HandlerMapping 处理器映射器：包含请求路径和模型的对应关系，能够完成请求到controller映射；
+* Controller/Handler 处理器：处理业务逻辑，
+* ViewResovler 视图解析器：进行视图解析，前端控制器依据ViewResovler的解析调用真正的视图对象生成相应页面。
+
+
+
+
+### SpringCloud
+#### Gateway
+自动配置类：GatewayAutoConfiguration，Spring Cloud Gateway的创建比较复杂，核心类就是GatewayAutoConfiguration，主要实现以下功能：
+* 配置了Netty；
+* 创建了GatewayProperties，这里从属性文件中获取了路由器配置和默认过滤器配置；
+* 创建了属性RouteDefinitionLocator，内存RouteDefinitionLocator和自动发现服务RouteDefinitionLocator, 并且将这三者合并为CompositeRouteDefinitionLocator；
+* 使用GatewayProperties+所有的GatewayFilterFactory,RoutePredicateFactory+CompositeRouteDefinitionLocator创建路由器列表RouteLocator, 这个东西包含所有；
+* 创建了一批全局过滤器；
+* 创建过滤器处理类 FilteringWebHandler；
+* 创建请求处理类 RoutePredicateHandlerMapping。
+> 客户端向Spring Cloud Gateway发出请求，然后在Gateway Handler Mapping中找到与请求相匹配的路由，将其发送到Gateway Web Handler。Handler再通过指定的过滤器链将请求发送到实际的服务执行业务逻辑，然后返回。过滤器可能会在发送代理请求之前（pre）或之后（post）执行业务逻辑。
+
+#### Gateway filter
+在配置文件中的filters中填写前缀即可，最终通过gatewayFilterFactories容器，key是factory.name()，而 value 是对应的 GatewayFilterFactory类型实现。  
+filter order：最终都是通过Order值进行排序执行，Order值越小越先执行。  
+GlobalFilter：全局过滤器，对所有路由生效。通过实现GlobalFilter接口创建。  
+GatewayFilter：网关过滤器，也可以说是局部过滤器、自定义过滤器，只对配置了此过滤器的路由生效。通过GatewayFilterFactory创建。
+过滤器会被执行两次，过滤分为pre和post。  
+pre：请求前调用。
+post：响应结果返回时调用，顺序和pre完全相反，这里只讨论过滤器的pre执行顺序，post倒置过来就行了。  
+1. 两个GlobalFilter类型的过滤器Order值相同时，根据文件名字母排序，文件名靠前的优先更高。原因是包扫描时是按照文件的顺序扫描的，然后封装到List集合的，通过Order值排序时如果Order值相同，文件名在前名的依然会排在前面。
+2. GlobalFilter类型和GatewayFilter类型的过滤器Order值相同时，GlobalFilter类型优先更高。原因是这两种过滤器最终会合并到一个过滤器集合中形成过滤器调用链，源码是通过list.addAll();方法将GatewayFilter类型的过滤器加到了GlobalFilter过滤器集合中，addAll()是末尾添加方式，所以Order值相同时GatewayFilter类型的过滤器会排在后面。
+
+
+
+### HTTP服务调用
+REST Template和Feign Client
+* REST Template：通过Ribbon(负载均衡)和RestTemplate是实现；
+* Feign Client：OpenFeign(Spring Cloud OpenFeign)，用以替代Feign（Netflix Feign）
+#### 常用注解
+OpenFeign 声明式服务调用和负载均衡组件，因此核心是使用注解+接口的方式实现服务调用。对于Feign框架来说，只支持Feign注解和JAX-RS注解，OpenFeign在其基础上增加了对Spring MVC注解的支持。
+* @EnableFeignClients：用于开启OpenFeign功能，当应用启动时，OpenFeign会扫描有@FeignClient注解的接口，生成代理并注册到Spring容器中；
+* @FeignClient：用于通知OpenFeign组件对@RequestMapping注解下接口进行解析，并通过动态代理的方式产生实现类，实现负载均衡和服务调用。
