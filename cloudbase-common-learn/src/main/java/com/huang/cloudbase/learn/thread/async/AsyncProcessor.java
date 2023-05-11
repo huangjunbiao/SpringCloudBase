@@ -85,7 +85,6 @@ public class AsyncProcessor<K, V> {
      * 异步任务执行接口
      *
      * @param <T> 任务数据类
-     * @author WangYicheng
      */
     public interface Actor<T> {
 
