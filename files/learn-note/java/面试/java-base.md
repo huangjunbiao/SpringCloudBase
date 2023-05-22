@@ -1,3 +1,13 @@
+#### 数据类型占位
+* byte，1字节，8位，-128（-2^7）~127（2^7-1）；
+* boolean，至少1字节；
+* short，2字节；
+* char，2字节；
+* int，4字节；
+* float，4字节；
+* long，8字节；
+* double，8字节，双精度浮点数字长64位；
+
 #### comparator和comparable
 两者都是用来实现集合中元素的比较、排序的，只是comparable是在集合内部定义的方法实现的排序，comparator是在集合外部实现的排序。所以，若想实现排序，就需要在集合外定义Comparator接口的方法或者在集合内部实现comparable接口的方法。  
 comparator位于包java.util下，comparable位于包java.lang下。  
